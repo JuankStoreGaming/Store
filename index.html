@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JUANKA VIP STORE — Productos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rojo:    #E8152A;
+    --rojo-d:  #b50f1f;
+    --negro:   #0F0F0F;
+    --negro-m: #1A1A1A;
+    --negro-s: #272727;
+    --gris:    #6B6B6B;
+    --gris-l:  #A0A0A0;
+    --celeste: #52B8D8;
+    --blanco:  #F2F2F2;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--negro);
+    color: var(--blanco);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding: 40px 5%;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center;
+    padding: 0 5%;
+    height: 64px;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #222;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.45rem;
+    letter-spacing: 2px;
+    color: var(--blanco);
+  }
+  .nav-logo span { color: var(--rojo); }
+
+  /* ── WHATSAPP BANNER ── */
+  .wa-banner {
+    max-width: 1200px;
+    margin: 84px auto 1.5rem;
+    background: var(--negro-m);
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid var(--rojo);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .9rem 1.4rem;
+    text-decoration: none;
+    color: var(--blanco);
+    transition: border-color .2s, background .2s;
+  }
+  .wa-banner:hover {
+    background: #202020;
+    border-color: #3a3a3a;
+    border-left-color: var(--rojo-d);
+  }
+  .wa-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .wa-text { flex: 1; }
+  .wa-text strong {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem;
+    letter-spacing: 1.5px;
+    color: var(--blanco);
+  }
+  .wa-text span { font-size: .75rem; color: var(--gris-l); }
+  .wa-cta {
+    background: var(--rojo);
+    color: #fff;
+    font-weight: 700;
+    font-size: .78rem;
+    letter-spacing: .5px;
+    padding: .5rem 1rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background .2s;
+  }
+  .wa-banner:hover .wa-cta { background: var(--rojo-d); }
+
+  /* ── PRODUCTS GRID ── */
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: var(--negro-m);
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .2s, border-color .2s;
+    position: relative;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #444; }
+
+  .card-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--rojo);
+    color: #fff;
+    font-size: .7rem; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: .25rem .6rem;
+    border-radius: 3px;
+  }
+
+  .card-img {
+    height: 160px;
+    background: var(--negro-s);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+  }
+
+  .card-body { padding: 1.2rem; flex: 1; }
+  .card-cat {
+    font-size: .72rem; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--celeste);
+    margin-bottom: .4rem;
+  }
+  .card-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    line-height: 1.1;
+    margin-bottom: .6rem;
+  }
+  .card-rating { font-size: .8rem; color: var(--gris-l); margin-bottom: .8rem; }
+  .stars { color: #f5c518; }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .45rem;
+    margin-top: .2rem;
+  }
+  .price-grid.two-col { grid-template-columns: repeat(2, 1fr); }
+  .price-pill {
+    background: var(--negro-s);
+    border: 1px solid #333;
+    border-radius: 5px;
+    padding: .45rem .3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .price-pill:hover { border-color: #555; }
+  .price-pill .dias {
+    display: block;
+    font-size: .65rem;
+    font-weight: 600;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    color: var(--gris-l);
+    margin-bottom: .2rem;
+  }
+  .price-pill .monto {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.15rem;
+    letter-spacing: .5px;
+    color: var(--blanco);
+    line-height: 1;
+  }
+  .price-pill.destacado {
+    border-color: var(--rojo);
+    background: rgba(232,21,42,0.08);
+  }
+  .price-pill.destacado .monto { color: var(--rojo); }
+
+
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 2rem 5%;
+    margin-top: 3rem;
+    border-top: 1px solid #222;
+    color: var(--gris);
+    font-size: .78rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">JUANK <span>VIP</span> STORE</div>
+</nav>
+
+<!-- WhatsApp Channel Banner -->
+<a class="wa-banner" href="https://whatsapp.com/channel/0029Vb7lsboFSAt1LySvba27" target="_blank" rel="noopener">
+  <div class="wa-icon">💬</div>
+  <div class="wa-text">
+    <strong>CANAL DE WHATSAPP — JUANK STORE GAMING 🇵🇾</strong>
+    <span>Ofertas, novedades y soporte directo</span>
+  </div>
+  <div class="wa-cta">SEGUIR CANAL</div>
+</a>
+
+<div class="product-grid">
+
+  <div class="card">
+    <div class="card-badge">ANDROID</div>
+    <div class="card-img" style="padding:0;">
+      <img src="hqdefault.jpg" alt="Cuban APKMOD" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Android sin root</div>
+      <div class="card-name">CUBAN APKMOD</div>
+      <div class="card-rating"><span class="stars">★★★★★</span> Free Fire</div>
+      <div class="price-grid">
+        <div class="price-pill destacado">
+          <span class="dias">7 días</span>
+          <span class="monto">50mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">15 días</span>
+          <span class="monto">70mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">30 días</span>
+          <span class="monto">100mil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-badge">ANDROID</div>
+    <div class="card-img" style="padding:0;">
+      <img src="IMG-20260705-WA0017.jpg" alt="Drip Client Mobile" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="card-body">
+      <div class="card-cat">Android sin root</div>
+      <div class="card-name">DRIP CLIENT MOBILE</div>
+      <div class="card-rating"><span class="stars">★★★★★</span> Free Fire</div>
+      <div class="price-grid">
+        <div class="price-pill destacado">
+          <span class="dias">7 días</span>
+          <span class="monto">50mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">15 días</span>
+          <span class="monto">70mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">30 días</span>
+          <span class="monto">100mil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-badge">iOS</div>
+    <div class="card-img" style="padding:0;">
+      <img src="maxresdefault.jpg" alt="Monite Cheats iOS" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="card-body">
+      <div class="card-cat">iPhone 🔑 Solo la key</div>
+      <div class="card-name">MONITE CHEATS iOS</div>
+      <div class="card-rating"><span class="stars">★★★★★</span> Free Fire</div>
+      <div class="price-grid two-col">
+        <div class="price-pill destacado">
+          <span class="dias">7 días</span>
+          <span class="monto">100mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">30 días</span>
+          <span class="monto">160mil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-badge">iOS</div>
+    <div class="card-img" style="padding:0;">
+      <img src="panel-fluorite-thumbnail.jpg" alt="Fluorite iOS" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div class="card-body">
+      <div class="card-cat">iPhone 🔑 Solo la key</div>
+      <div class="card-name">FLUORITE iOS</div>
+      <div class="card-rating"><span class="stars">★★★★★</span> Free Fire</div>
+      <div class="price-grid two-col">
+        <div class="price-pill destacado">
+          <span class="dias">7 días</span>
+          <span class="monto">100mil</span>
+        </div>
+        <div class="price-pill">
+          <span class="dias">30 días</span>
+          <span class="monto">180mil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>© 2026 Juank VIP Store. Todos los derechos reservados. &nbsp;|&nbsp; 🇵🇾 Paraguay</footer>
+
+<script>
+  document.querySelectorAll('.price-pill').forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      var grid = this.closest('.price-grid');
+      grid.querySelectorAll('.price-pill').forEach(function(p) {
+        p.classList.remove('destacado');
+      });
+      this.classList.add('destacado');
+
+      var producto = this.closest('.card').querySelector('.card-name').textContent.trim();
+      var dias     = this.querySelector('.dias').textContent.trim();
+      var precio   = this.querySelector('.monto').textContent.trim();
+      var mensaje  = 'Hola! Quiero ' + producto + ' de ' + dias + ' por ' + precio + ' 🎮';
+      window.open('https://wa.me/595972934594?text=' + encodeURIComponent(mensaje), '_blank');
+    });
+  });
+
+
+</script>
+</body>
+</html>
